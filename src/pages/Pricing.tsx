@@ -1,41 +1,20 @@
-import React from 'react'
-import PricingTable from '../components/PricingTable'
-import { ADDONS } from '../data/pricing'
-
-export default function PricingPage() {
+﻿export default function Pricing() {
   return (
-    <main className='py-16 bg-white text-gray-800'>
-      <div className='max-w-6xl mx-auto px-4 space-y-12'>
-        <header className='text-center space-y-3'>
-          <h1 className='text-4xl font-bold'>Simple, Transparent Pricing</h1>
-          <p className='text-gray-600 max-w-2xl mx-auto'>
-            Every rental includes the essentials: tables and chairs, a custom floor plan, AV basics,
-            load-in help, and post-event trash removal.
-          </p>
-        </header>
-
-        <PricingTable />
-
-        <section className='space-y-3'>
-          <h2 className='text-2xl font-semibold'>Add-Ons</h2>
-          <div className='overflow-x-auto border rounded-lg'>
-            <table className='w-full text-left border-collapse'>
-              <thead className='bg-gray-50 font-semibold text-gray-700'>
-                <tr><th className='p-3'>Add-On</th><th>Details</th><th>Price</th></tr>
-              </thead>
-              <tbody className='divide-y'>
-                {ADDONS.map((a) => (
-                  <tr key={a.name}>
-                    <td className='p-3 font-medium'>{a.name}</td>
-                    <td>{a.details ?? ''}</td>
-                    <td>{a.price}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+    <div className="max-w-5xl mx-auto py-10">
+      <h1 className="text-3xl font-bold mb-6">Pricing</h1>
+      <div className="grid gap-6 md:grid-cols-3">
+        {[
+          { name: "Weekday", price: "$950", blurb: "4 hours, chairs and tables" },
+          { name: "Weekend", price: "$1,450", blurb: "6 hours, host on site" },
+          { name: "Premium", price: "$2,100", blurb: "8 hours, decor kit" },
+        ].map(t => (
+          <div key={t.name} className="rounded-2xl border p-6 shadow-sm">
+            <div className="text-lg font-semibold mb-2">{t.name}</div>
+            <div className="text-3xl font-extrabold text-blue-600 mb-2">{t.price}</div>
+            <p className="text-gray-600">{t.blurb}</p>
           </div>
-        </section>
+        ))}
       </div>
-    </main>
-  )
+    </div>
+  );
 }

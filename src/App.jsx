@@ -1,19 +1,23 @@
-﻿import { Routes, Route, NavLink } from "react-router-dom";
+﻿import { NavLink, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Pricing from "./pages/Pricing.jsx";
 import Gallery from "./pages/Gallery.jsx";
 
 export default function App() {
+  const link = ({ isActive }) =>
+    "px-3 py-2 rounded-md " + (isActive ? "bg-blue-100 text-blue-700" : "text-gray-700 hover:bg-gray-100");
+
   return (
-    <div className="min-h-screen text-gray-900">
+    <div className="min-h-screen">
       <header className="border-b">
-        <nav className="mx-auto max-w-6xl flex items-center gap-6 p-4">
-          <NavLink to="/" className="font-semibold">Home</NavLink>
-          <NavLink to="/pricing" className="font-semibold">Pricing</NavLink>
-          <NavLink to="/gallery" className="font-semibold">Gallery</NavLink>
+        <nav className="max-w-6xl mx-auto px-4 h-14 flex items-center gap-2">
+          <NavLink to="/" className={link} end>Home</NavLink>
+          <NavLink to="/pricing" className={link}>Pricing</NavLink>
+          <NavLink to="/gallery" className={link}>Gallery</NavLink>
         </nav>
       </header>
-      <main className="mx-auto max-w-6xl p-6">
+
+      <main className="max-w-6xl mx-auto px-4 py-10">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/pricing" element={<Pricing />} />

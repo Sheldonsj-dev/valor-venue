@@ -1,22 +1,13 @@
-﻿const modules = import.meta.glob("../assets/gallery/*.{png,jpg,jpeg,gif,webp}", { eager: true });
-const IMAGES = Object.values(modules).map((m) => m.default).sort();
-
-export default function Gallery() {
-  if (IMAGES.length === 0) {
-    return (
-      <section className="space-y-2">
-        <h1 className="text-3xl font-bold">Gallery</h1>
-        <p>Add images to <code>src/assets/gallery</code> then refresh.</p>
-      </section>
-    );
-  }
-
+﻿export default function Gallery() {
+  const images = ["1.jpg","2.jpg","3.jpg"].map(n => `/gallery/${n}`);
   return (
-    <section className="space-y-4">
-      <h1 className="text-3xl font-bold">Gallery</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {IMAGES.map((src, i) => (
-          <img key={i} src={src} alt={"Gallery " + (i + 1)} className="w-full h-64 object-cover rounded-lg border" />
+    <section>
+      <h1 className="text-4xl font-bold mb-6">Gallery</h1>
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {images.map((src,i) => (
+          <div key={i} className="aspect-video bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
+            <span className="text-gray-400">Add {src}</span>
+          </div>
         ))}
       </div>
     </section>
