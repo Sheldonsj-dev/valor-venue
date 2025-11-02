@@ -1,4 +1,4 @@
-﻿# Text files use LF in the repo
+# Text files use LF in the repo
 *.js    text eol=lf
 *.ts    text eol=lf
 *.tsx   text eol=lf
