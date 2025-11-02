@@ -1,5 +1,5 @@
 ﻿import React from "react";
-import { PACKAGES } from "@/data/pricing";
+import { PACKAGES } from "../data/pricing";
 
 export default function PricingTable() {
   return (
