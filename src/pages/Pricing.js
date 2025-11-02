@@ -1,5 +1,0 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { TIERS } from "@/data/pricing";
-export default function PricingPage() {
-    return (_jsxs("main", { className: "px-6 md:px-10 py-10", children: [_jsx("h1", { className: "text-3xl md:text-4xl font-extrabold mb-6", children: "Pricing" }), _jsx("div", { className: "grid md:grid-cols-3 gap-6", children: TIERS.map(tier => (_jsxs("div", { className: "rounded-xl border shadow-sm p-6", children: [_jsx("h3", { className: "text-xl font-bold", children: tier.name }), _jsx("p", { className: "mt-2 text-3xl font-extrabold text-blue-600", children: tier.price }), _jsx("p", { className: "mt-2 text-gray-700", children: tier.desc }), tier.details?.length ? (_jsx("ul", { className: "mt-4 space-y-1 list-disc list-inside text-sm text-gray-700", children: tier.details.map((d, i) => _jsx("li", { children: d }, i)) })) : null, _jsx("button", { className: "mt-5 inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700", children: "Check availability" })] }, tier.name))) })] }));
-}
