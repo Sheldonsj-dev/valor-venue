@@ -6,7 +6,7 @@ export default function Home() {
           <img
             src="/brand/logo.png"
             alt="Valor Venue logo"
-            className="mx-auto h-20 w-auto"
+            className="mx-auto h-28 sm:h-32 md:h-36 w-auto max-w-[280px] sm:max-w-[340px]"
             loading="eager"
             decoding="async"
           />
