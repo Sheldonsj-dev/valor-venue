@@ -1,4 +1,4 @@
-﻿# Deploy Valor Venue site to GitHub Pages
+# Deploy Valor Venue site to GitHub Pages
 Write-Host "🚀 Building project..." -ForegroundColor Cyan
 npm run build
 
