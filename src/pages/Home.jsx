@@ -6,19 +6,12 @@ export default function Home() {
           <img
             src="/brand/logo.png"
             alt="Valor Venue logo"
-            className="mx-auto h-28 sm:h-32 md:h-36 w-auto max-w-[280px] sm:max-w-[340px]"
+            className="mx-auto h-40 sm:h-32 md:h-36 w-auto max-w-[280px] sm:max-w-[340px]"
             loading="eager"
             decoding="async"
           />
-          <p className="text-sm font-medium tracking-[0.22em] uppercase text-neutral-600">
-            Honor the moment.
-          </p>
-        </div>
-
-        <h1 className="mt-10 text-4xl font-semibold tracking-tight">
-          The Valor Venue
-        </h1>
-        <p className="mt-3 text-base text-neutral-700">
+</div>
+<p className="mt-3 text-base text-neutral-700">
           Modern, elegant, and flexible. Up to 120 guests.
         </p>
 
