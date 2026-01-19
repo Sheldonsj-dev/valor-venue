@@ -4,12 +4,12 @@ export default function Home() {
       <section className="text-center">
         <div className="flex flex-col items-center text-center gap-3">
           <img
-            src="/brand/logo.png"
-            alt="Valor Venue logo"
-            className="mx-auto h-40 sm:h-32 md:h-32 w-auto max-w-[280px] sm:max-w-[340px]"
-            loading="eager"
-            decoding="async"
-          />
+  src="/brand/logo.png"
+  alt="The Valor Venue"
+  className="mx-auto w-auto h-56 sm:h-64 md:h-72 lg:h-80"
+  loading="eager"
+  decoding="async"
+/>
 </div>
 <p className="mt-3 text-base text-neutral-700">
           Modern, elegant, and flexible. Up to 120 guests.
