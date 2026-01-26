@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 tools/backups/
 src/pages/*.bak-*
+.env
+.env.local
