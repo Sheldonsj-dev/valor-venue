@@ -37,6 +37,8 @@ foreach ($f in (& git ls-files)) {
     }
   } catch { }
 }
+# Ignore binary assets when checking for CRLF (PNG/JPG/etc can contain 0D0A bytes)
+$crlfFiles = $crlfFiles | Where-Object { $_ -notmatch '\.(png|jpg|jpeg|gif|webp|ico|pdf|zip|woff2?|ttf|eot|otf)$' }
 if ($crlfFiles.Count -gt 0) { Fail "CRLF found in: $($crlfFiles -join ', '). Run: git add --renormalize . && git commit -m 'chore: normalize LF'" }
 
 # Install, optional typecheck, build

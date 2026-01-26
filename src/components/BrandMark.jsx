@@ -1,4 +1,4 @@
-﻿export default function BrandMark() {
+export default function BrandMark() {
   return (
     <div className="flex flex-col items-center text-center">
       <img

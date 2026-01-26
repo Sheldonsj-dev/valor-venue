@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <section className="mx-auto max-w-5xl px-6">
       <div className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center text-center gap-3 py-10">
-        {/* Logo image (already includes “THE VALOR VENUE”, so do not repeat as text) */}
+        {/* Logo image (already includes â€œTHE VALOR VENUEâ€, so do not repeat as text) */}
         <img
           src={logoSrc}
           alt="The Valor Venue"
