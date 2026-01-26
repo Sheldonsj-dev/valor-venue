@@ -1,4 +1,4 @@
-﻿export default function Home() {
+export default function Home() {
   return (
     <div className="max-w-5xl mx-auto py-10">
       <h1 className="text-3xl font-bold mb-2">Welcome to The Valor Venue</h1>
