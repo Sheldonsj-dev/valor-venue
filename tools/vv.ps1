@@ -46,7 +46,7 @@ function vv-build {
   if (-not (Test-Path .\dist\brand\logo-cropped.png)) { Write-Host "WARN: dist\brand\logo-cropped.png missing" -ForegroundColor Yellow }
   if (-not (Test-Path .\dist\brand\hero.jpg)) { Write-Host "NOTE: dist\brand\hero.jpg missing (hero won't show)" -ForegroundColor Yellow }
 
-  Write-Host "✅ Build OK + ./assets verified" -ForegroundColor Green
+  Write-Host "âœ… Build OK + ./assets verified" -ForegroundColor Green
 }
 
 function vv-prepush {
@@ -79,7 +79,7 @@ function vv-push {
 function vv-deploy {
   vv-cd
   npx gh-pages -d dist -b gh-pages
-  Write-Host "✅ Published to gh-pages" -ForegroundColor Green
+  Write-Host "âœ… Published to gh-pages" -ForegroundColor Green
 }
 
 # Curl helper that avoids your CRYPT_E_NO_REVOCATION_CHECK
@@ -91,7 +91,7 @@ function vv-http([string]$path) {
     $url = $path
   }
   $ts = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
-  $url2 = if ($url -match "\?") { "$url&v=$ts" } else { "$url?v=$ts" }
+  $url2 = if ($url -match "\?") { "${url}&v=$ts" } else { "${url}?v=$ts" }
 
   $code = & curl.exe --ssl-no-revoke -s -o NUL -w "%{http_code}" "$url2"
   [pscustomobject]@{ Url = $url2; StatusCode = $code }
@@ -111,7 +111,7 @@ function vv-verify-live {
   vv-http "/brand/hero.jpg" | Format-Table -AutoSize
   vv-http "/gallery/1.jpg" | Format-Table -AutoSize
 
-  Write-Host "✅ Live checks passed (assets paths + key files reachable)" -ForegroundColor Green
+  Write-Host "âœ… Live checks passed (assets paths + key files reachable)" -ForegroundColor Green
 }
 
 function vv-release([string]$message) {
@@ -122,5 +122,5 @@ function vv-release([string]$message) {
   vv-push
   vv-deploy
   vv-verify-live
-  Write-Host "✅ Release complete" -ForegroundColor Green
+  Write-Host "âœ… Release complete" -ForegroundColor Green
 }
