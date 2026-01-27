@@ -46,7 +46,7 @@ function vv-build {
   if (-not (Test-Path .\dist\brand\logo-cropped.png)) { Write-Host "WARN: dist\brand\logo-cropped.png missing" -ForegroundColor Yellow }
   if (-not (Test-Path .\dist\brand\hero.jpg)) { Write-Host "NOTE: dist\brand\hero.jpg missing (hero won't show)" -ForegroundColor Yellow }
 
-  Write-Host "âœ… Build OK + ./assets verified" -ForegroundColor Green
+  Write-Host "Ã¢Å“â€¦ Build OK + ./assets verified" -ForegroundColor Green
 }
 
 function vv-prepush {
@@ -79,7 +79,7 @@ function vv-push {
 function vv-deploy {
   vv-cd
   npx gh-pages -d dist -b gh-pages
-  Write-Host "âœ… Published to gh-pages" -ForegroundColor Green
+  Write-Host "Ã¢Å“â€¦ Published to gh-pages" -ForegroundColor Green
 }
 
 # Curl helper that avoids your CRYPT_E_NO_REVOCATION_CHECK
@@ -100,18 +100,29 @@ function vv-http([string]$path) {
 function vv-verify-live {
   vv-cd
 
-  $root = & curl.exe --ssl-no-revoke -s -L "$global:VV_SITE/?v=$([DateTimeOffset]::UtcNow.ToUnixTimeSeconds())"
-  if ($root -notmatch '\./assets/') { throw "LIVE root missing ./assets/" }
-  if ($root -match '="/assets/') { throw "LIVE root contains /assets/ (bad for Pages)" }
+  $ts = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
+  $root = (& curl.exe --ssl-no-revoke --compressed -s -L "$global:VV_SITE/?v=$ts") -join "`n"
 
-  $nf = & curl.exe --ssl-no-revoke -s -L "$global:VV_SITE/404.html?v=$([DateTimeOffset]::UtcNow.ToUnixTimeSeconds())"
-  if ($nf -notmatch '\./assets/') { throw "LIVE 404 missing ./assets/" }
+  if (-not [regex]::IsMatch($root, "\./assets/")) {
+    # Helpful debug: show any assets-like lines
+    Write-Host "DEBUG: first 25 lines of live root HTML:" -ForegroundColor Yellow
+    ($root -split "`n" | Select-Object -First 25) | ForEach-Object { Write-Host $_ }
+    throw "LIVE root missing ./assets/"
+  }
+
+  if ([regex]::IsMatch($root, '="/assets/')) {
+    throw "LIVE root contains /assets/ (bad for GitHub Pages)"
+  }
+
+  $ts = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
+  $nf = (& curl.exe --ssl-no-revoke --compressed -s -L "$global:VV_SITE/404.html?v=$ts") -join "`n"
+  if (-not [regex]::IsMatch($nf, "\./assets/")) { throw "LIVE 404 missing ./assets/" }
 
   vv-http "/brand/logo-cropped.png" | Format-Table -AutoSize
   vv-http "/brand/hero.jpg" | Format-Table -AutoSize
   vv-http "/gallery/1.jpg" | Format-Table -AutoSize
 
-  Write-Host "âœ… Live checks passed (assets paths + key files reachable)" -ForegroundColor Green
+  Write-Host "✅ Live checks passed (assets paths + key files reachable)" -ForegroundColor Green
 }
 
 function vv-release([string]$message) {
@@ -122,5 +133,5 @@ function vv-release([string]$message) {
   vv-push
   vv-deploy
   vv-verify-live
-  Write-Host "âœ… Release complete" -ForegroundColor Green
+  Write-Host "Ã¢Å“â€¦ Release complete" -ForegroundColor Green
 }
