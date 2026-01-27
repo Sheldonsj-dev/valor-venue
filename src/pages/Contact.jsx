@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { site } from "../content/site";
+import { track } from "../lib/analytics";
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || "").trim());
@@ -12,9 +13,7 @@ export default function Contact() {
 
   const endpoint = (import.meta.env.VITE_FORM_ENDPOINT || "").trim();
   const hasEndpoint =
-    endpoint &&
-    endpoint.startsWith("https://") &&
-    !endpoint.includes("YOUR_FORM_ID");
+    endpoint && endpoint.startsWith("https://") && !endpoint.includes("YOUR_FORM_ID");
 
   const [form, setForm] = useState(() => ({
     name: "",
@@ -27,7 +26,6 @@ export default function Contact() {
     company: "", // honeypot
   }));
 
-  // Keep form package synced when navigating between pkg links
   useEffect(() => {
     setForm((prev) => ({ ...prev, package: pkg }));
   }, [pkg]);
@@ -47,7 +45,12 @@ export default function Contact() {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  function openMailtoFallback() {
+  function openMailtoFallback(reason = "mailto_fallback") {
+    track("vv_contact_submit_mailto", {
+      pkg: form.package || undefined,
+      reason,
+    });
+
     const to = site.contact.email || "info@thevalorvenue.com";
     const subject = encodeURIComponent(
       `Tour / Availability Request${packageLabel ? ` (${packageLabel})` : ""}`
@@ -94,22 +97,30 @@ export default function Contact() {
     }
 
     if (!form.name.trim()) {
+      track("vv_contact_submit_error", { reason: "missing_name" });
       setStatus({ state: "error", message: "Please add your name." });
       return;
     }
 
     if (!isValidEmail(form.email)) {
+      track("vv_contact_submit_error", { reason: "invalid_email" });
       setStatus({ state: "error", message: "Please enter a valid email address." });
       return;
     }
 
-    // Preferred path: real endpoint
+    track("vv_contact_submit_attempt", {
+      pkg: form.package || undefined,
+      has_endpoint: hasEndpoint,
+    });
+
     if (hasEndpoint) {
       try {
         setStatus({ state: "sending", message: "Sending…" });
 
         const ok = await submitToEndpoint();
         if (!ok) throw new Error("Endpoint returned non-OK");
+
+        track("vv_contact_submit_success", { pkg: form.package || undefined });
 
         setStatus({ state: "success", message: "Sent! We’ll reach out soon." });
         setForm((prev) => ({
@@ -124,6 +135,7 @@ export default function Contact() {
         }));
         return;
       } catch {
+        track("vv_contact_submit_error", { reason: "endpoint_failed" });
         setStatus({
           state: "error",
           message:
@@ -133,8 +145,8 @@ export default function Contact() {
       }
     }
 
-    // Fallback: mailto (works even without endpoint)
-    openMailtoFallback();
+    // Fallback: mailto
+    openMailtoFallback("no_endpoint_configured");
     setStatus({ state: "success", message: "Opening your email app…" });
   }
 
@@ -149,11 +161,17 @@ export default function Contact() {
       </p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-2">
-        <form onSubmit={onSubmit} className="rounded-xl border bg-white p-6 shadow-sm">
+        <form
+          onSubmit={onSubmit}
+          className="rounded-xl border bg-white p-6 shadow-sm"
+        >
           <div className="hidden">
             <label>
               Company
-              <input value={form.company} onChange={(e) => update("company", e.target.value)} />
+              <input
+                value={form.company}
+                onChange={(e) => update("company", e.target.value)}
+              />
             </label>
           </div>
 
@@ -253,16 +271,13 @@ export default function Contact() {
             <p className="mt-4 text-xs text-slate-500">
               To enable direct submission (recommended), set{" "}
               <code>VITE_FORM_ENDPOINT</code> in <code>.env.local</code>.
-              (You can use Formspree / Getform / Basin.)
             </p>
           ) : null}
         </form>
 
         <div className="rounded-xl border bg-white p-6 shadow-sm">
           <div className="text-sm font-semibold text-slate-900">Email option</div>
-          <p className="mt-2 text-sm text-slate-600">
-            Prefer email? Contact us directly:
-          </p>
+          <p className="mt-2 text-sm text-slate-600">Prefer email? Contact us directly:</p>
 
           <div className="mt-3 text-sm text-slate-700">
             <a className="underline-offset-4 hover:underline" href={`mailto:${site.contact.email}`}>
@@ -273,7 +288,7 @@ export default function Contact() {
           <div className="mt-4">
             <button
               type="button"
-              onClick={openMailtoFallback}
+              onClick={() => openMailtoFallback("user_clicked_email_option")}
               className="rounded-md bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
             >
               Email this request

@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
+import RouteAnalytics from "./components/RouteAnalytics";
 
 import Home from "./pages/Home.jsx";
 import Pricing from "./pages/Pricing.jsx";
@@ -11,9 +12,12 @@ function NotFound() {
   return (
     <div className="py-16">
       <h1 className="text-3xl font-extrabold text-slate-900">Page not found</h1>
-      <p className="mt-2 text-slate-600">Letâ€™s get you back on track.</p>
+      <p className="mt-2 text-slate-600">Let’s get you back on track.</p>
       <div className="mt-6">
-        <a className="rounded-md bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-black/90" href="#/">
+        <a
+          className="rounded-md bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-black/90"
+          href="#/"
+        >
           Go to Home
         </a>
       </div>
@@ -25,6 +29,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white text-slate-900">
       <SiteHeader />
+      <RouteAnalytics />
 
       <main className="mx-auto w-full max-w-6xl px-4 pb-16 pt-10">
         <Routes>

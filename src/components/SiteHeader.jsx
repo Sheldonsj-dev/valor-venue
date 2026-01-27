@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { site } from "../content/site";
+import { track } from "../lib/analytics";
 
 const base = import.meta.env.BASE_URL;
 const logoSrc = `${base}brand/logo-cropped.png`;
@@ -29,6 +30,7 @@ export default function SiteHeader() {
 
           <NavLink
             to="/contact"
+            onClick={() => track("vv_header_schedule_tour_click")}
             className="ml-2 rounded-md bg-black px-4 py-2 text-sm font-semibold text-white transition hover:bg-black/90 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
           >
             Schedule a Tour
