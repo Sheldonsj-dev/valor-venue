@@ -4,13 +4,25 @@ export default function Home() {
   // Works in dev and on GitHub Pages because BASE_URL changes with the build base
   const logoSrc = `${import.meta.env.BASE_URL}brand/logo-cropped.png`;
 
+const heroSrc = `${import.meta.env.BASE_URL}brand/hero.jpg`;
   // Replace later with your real scheduling link (Calendly, form, etc.)
   const tourHref = "#";
 
   return (
     <section className="mx-auto max-w-5xl px-6">
+      {/* vv:home-hero */}
+      <section className="mb-10">
+        <img
+          src={heroSrc}
+          alt="The Valor Venue"
+          className="h-[420px] w-full rounded-3xl object-cover shadow-sm"
+          loading="eager"
+          decoding="async"
+        />
+      </section>
+
       <div className="min-h-[calc(100vh-80px)] flex flex-col items-center justify-center text-center gap-3 py-10">
-        {/* Logo image (already includes â€œTHE VALOR VENUEâ€, so do not repeat as text) */}
+        {/* Logo image (already includes Ã¢â‚¬Å“THE VALOR VENUEÃ¢â‚¬Â, so do not repeat as text) */}
         <img
           src={logoSrc}
           alt="The Valor Venue"
