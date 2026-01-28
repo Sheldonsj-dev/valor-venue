@@ -3,8 +3,15 @@ import { useEffect, useRef, useState } from "react";
 const base = import.meta.env.BASE_URL;
 
 const photos = [
-  { file: "1.jpg", alt: "The Valor Venue — Gallery photo 1" },
-  { file: "2.jpg", alt: "The Valor Venue — Gallery photo 2" },
+  { file: "1.jpg", alt: "The Valor Venue — gallery photo 1" },
+  { file: "2.jpg", alt: "The Valor Venue — gallery photo 2" },
+  { file: "3.jpg", alt: "The Valor Venue — gallery photo 3" },
+  { file: "4.jpg", alt: "The Valor Venue — gallery photo 4" },
+  { file: "5.jpg", alt: "The Valor Venue — gallery photo 5" },
+  { file: "6.jpg", alt: "The Valor Venue — gallery photo 6" },
+  { file: "7.jpg", alt: "The Valor Venue — gallery photo 7" },
+  { file: "8.jpg", alt: "The Valor Venue — gallery photo 8" },
+  { file: "9.jpg", alt: "The Valor Venue — gallery photo 9" },
 ];
 
 function Tile({ photo, onOpen }) {
