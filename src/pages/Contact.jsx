@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { site } from "../content/site";
 import { track } from "../lib/analytics";
 
@@ -92,7 +92,7 @@ export default function Contact() {
 
     // Honeypot => pretend success
     if (form.company) {
-      setStatus({ state: "success", message: "Thanks! We’ll be in touch soon." });
+      setStatus({ state: "success", message: "Thanks! WeÃ¢â‚¬â„¢ll be in touch soon." });
       return;
     }
 
@@ -115,14 +115,14 @@ export default function Contact() {
 
     if (hasEndpoint) {
       try {
-        setStatus({ state: "sending", message: "Sending…" });
+        setStatus({ state: "sending", message: "SendingÃ¢â‚¬Â¦" });
 
         const ok = await submitToEndpoint();
         if (!ok) throw new Error("Endpoint returned non-OK");
 
         track("vv_contact_submit_success", { pkg: form.package || undefined });
 
-        setStatus({ state: "success", message: "Sent! We’ll reach out soon." });
+        setStatus({ state: "success", message: "Sent! WeÃ¢â‚¬â„¢ll reach out soon." });
         setForm((prev) => ({
           ...prev,
           name: "",
@@ -139,7 +139,7 @@ export default function Contact() {
         setStatus({
           state: "error",
           message:
-            "We couldn’t send your request right now. Please use the email option below.",
+            "We couldnÃ¢â‚¬â„¢t send your request right now. Please use the email option below.",
         });
         return;
       }
@@ -147,7 +147,7 @@ export default function Contact() {
 
     // Fallback: mailto
     openMailtoFallback("no_endpoint_configured");
-    setStatus({ state: "success", message: "Opening your email app…" });
+    setStatus({ state: "success", message: "Opening your email appÃ¢â‚¬Â¦" });
   }
 
   return (
@@ -156,7 +156,7 @@ export default function Contact() {
         Schedule a Tour
       </h1>
       <p className="mt-3 max-w-2xl text-slate-600">
-        Tell us a bit about your event and we’ll confirm availability.
+        Tell us a bit about your event and weÃ¢â‚¬â„¢ll confirm availability.
         {packageLabel ? ` (Selected package: ${packageLabel})` : ""}
       </p>
 
@@ -254,7 +254,7 @@ export default function Contact() {
               className="rounded-md bg-black px-5 py-2.5 text-sm font-semibold text-white hover:bg-black/90 disabled:opacity-50"
               disabled={status.state === "sending"}
             >
-              {status.state === "sending" ? "Sending…" : "Submit request"}
+              {status.state === "sending" ? "SendingÃ¢â‚¬Â¦" : "Submit request"}
             </button>
 
             <div aria-live="polite" className="text-sm">
@@ -267,7 +267,13 @@ export default function Contact() {
             </div>
           </div>
 
-          {!hasEndpoint ? (
+          <p className="mt-4 text-xs text-slate-500">
+            By submitting this form, you agree to our{" "}
+            <Link to="/privacy" className="underline underline-offset-4 hover:opacity-90">
+              Privacy Policy
+            </Link>.
+          </p>
+{!hasEndpoint ? (
             <p className="mt-4 text-xs text-slate-500">
               To enable direct submission (recommended), set{" "}
               <code>VITE_FORM_ENDPOINT</code> in <code>.env.local</code>.

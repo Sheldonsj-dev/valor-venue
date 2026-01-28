@@ -13,7 +13,7 @@ function NotFound() {
   return (
     <div className="py-16">
       <h1 className="text-3xl font-extrabold text-slate-900">Page not found</h1>
-      <p className="mt-2 text-slate-600">Letâ€™s get you back on track.</p>
+      <p className="mt-2 text-slate-600">LetÃ¢â‚¬â„¢s get you back on track.</p>
       <div className="mt-6">
         <a
           className="rounded-md bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-black/90"
