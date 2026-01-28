@@ -54,8 +54,9 @@ export default function SiteFooter() {
       </div>
 
       <div className="border-t py-4 text-center text-xs text-slate-500">
-        © {year} {site.name}. All rights reserved.
+        Â© {year} {site.name}. All rights reserved.
       </div>
-    </footer>
+      <div className="mt-6 text-xs text-slate-500"><a href="#/privacy" className="hover:underline">Privacy Policy</a></div>
+</footer>
   );
 }

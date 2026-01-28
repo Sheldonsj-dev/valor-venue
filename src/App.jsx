@@ -1,3 +1,4 @@
+import Privacy from "./pages/Privacy";
 import { Navigate, Route, Routes } from "react-router-dom";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
@@ -12,7 +13,7 @@ function NotFound() {
   return (
     <div className="py-16">
       <h1 className="text-3xl font-extrabold text-slate-900">Page not found</h1>
-      <p className="mt-2 text-slate-600">Let’s get you back on track.</p>
+      <p className="mt-2 text-slate-600">Letâ€™s get you back on track.</p>
       <div className="mt-6">
         <a
           className="rounded-md bg-black px-4 py-2 text-sm font-semibold text-white hover:bg-black/90"
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route path="/tour" element={<Navigate to="/contact?intent=tour" replace />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
